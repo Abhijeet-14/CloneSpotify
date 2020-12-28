@@ -5,7 +5,7 @@ function Error() {
         <div>
             <h1>
                 Something went wrong!<br />
-                Error Occured!
+                Not Found
             </h1>
         </div>
     )

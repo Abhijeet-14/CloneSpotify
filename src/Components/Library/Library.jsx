@@ -1,9 +1,13 @@
 import React from 'react'
+import queryString from 'query-string'
 
-function Library() {
+function Library({match, location}) {
+    const result = queryString.parse(location.search);
+     
     return (
         <div>
-            Library
+            Library <br/>
+            Year: {result.year}, Month: {result.month}
         </div>
     )
 }
