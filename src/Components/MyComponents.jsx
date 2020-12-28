@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import {Route} from 'react-router-dom'
 
 //--- COMPONENTS
-import Error from './Error/Error'
+// import Error from './Error/Error'
 import Feedback from './Feedback/Feedback'
 import Header from './Header/Header'
 import Home from './Home/Home'
