@@ -4,17 +4,14 @@ import './App.css';
 
 //----  Components
 import MyComponents from './Components/MyComponents';
-import Spotify from './Components/Spotify';
 
 
 export const WindowDimContext = React.createContext(windowSize);
 
-function App({ windowHeight, windowWidth }) {
-  
+function App(props) {
   return (
-    <div className="App ">
-      <Spotify windowHeight={windowHeight} windowWidth={windowWidth} class=""/>
-      <WindowDimContext.Provider value={{windowWidth, windowHeight}} >
+    <div className="App">
+      <WindowDimContext.Provider value={props} >
         <MyComponents />
       </WindowDimContext.Provider>
     </div>
