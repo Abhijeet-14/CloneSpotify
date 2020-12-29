@@ -13,8 +13,7 @@ function App({ windowHeight, windowWidth }) {
   
   return (
     <div className="App ">
-      <Spotify windowHeight={windowHeight} windowWidth={windowWidth} class=""/> <br />
-      
+      <Spotify windowHeight={windowHeight} windowWidth={windowWidth} class=""/>
       <WindowDimContext.Provider value={{windowWidth, windowHeight}} >
         <MyComponents />
       </WindowDimContext.Provider>

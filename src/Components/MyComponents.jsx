@@ -61,7 +61,7 @@ function MyComponents(props) {
                     <Route path="/home" render={() => <Home />} />
 
                     {/* REDIRECT */}
-                    <Redirect from="/" to="/playlist" exact />
+                    <Redirect from="/" to="/home" exact />
                     <Redirect to="/not-found" />
                 </Switch>
             </div>
