@@ -25,8 +25,8 @@ function Spotify({ windowWidth, windowHeight }) {
 
     return (
         <div class="bg- text-center p-2 bg-dark ">
-            <img src={Logo} alt="logo" width={dim.logo} class="" />
-            <img src={Icon} alt="icon" width={dim.icon} class="float-right " />
+            <img src={Logo} alt="logo" width={dim.logo} className="" />
+            <img src={Icon} alt="icon" width={dim.icon} className="float-right " />
             <br />
         </div>
     )
