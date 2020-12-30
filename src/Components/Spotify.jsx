@@ -22,14 +22,16 @@ function Spotify() {
         if (windowWidth < 700)
             setDim({ ...dim, logo: "30%", icon: "8%" });
         else if (windowWidth > 700 && windowWidth < 900)
-            setDim({ ...dim, logo: "15%", icon: "6%" });
+            setDim({ ...dim, logo: "17%", icon: "6%" });
         else {
             setDim({ ...dim, logo: "10%", icon: "4%" });
         }
     }, [windowWidth]);
 
     return (
-        <div class="sticky-top text-center p-2 bg-dark ">
+        <div class="conatiner-fluid sticky-top text-center m-0 p-2 bg-dark overflow-hidden"
+            style={{height: ""}}
+        >
             <Link to="/">
                 <img src={Logo} alt="logo" width={dim.logo} className="" />
             </Link>

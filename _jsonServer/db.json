@@ -1,0 +1,22 @@
+{
+    "songs": [
+        {
+            "id": 1,
+            "title": "Song 1",
+            "aritist": "Artist 1",
+            "link": "Link 1"
+        },
+        {
+            "id": 2,
+            "title": "Song 2",
+            "aritist": "Artist 2",
+            "link": "Link 2"
+        },
+        {
+            "id": 3,
+            "title": "Song 3",
+            "aritist": "Artist 3",
+            "link": "Link 3"
+        }
+    ]
+}

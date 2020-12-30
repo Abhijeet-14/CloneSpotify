@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
 
+import gradient from '../colorGradient'
+
 //--- COMPONENTS
 import Error from './Error/Error'
 import Feedback from './Feedback/Feedback'
@@ -12,10 +14,10 @@ import Recommendation from './Recommendation/Recommendation'
 import Search from './Search/Search'
 
 //--- useContext
-import {WindowDimContext} from '../../App'
+import { WindowDimContext } from '../../App'
 
 function Center() {
-    const {windowWidth, windowHeight} = useContext(WindowDimContext)
+    const { windowWidth, windowHeight } = useContext(WindowDimContext)
 
     const [mobile, setMobile] = useState(false)
 
@@ -27,21 +29,28 @@ function Center() {
     }, [windowWidth])
 
     return (
-        <div class="container-fluid d-flex flex-column center bg-dark align-items-center">
-            <div className="row bg-primary justify-content-center">
+        <div class="container-fluid text-white align-items-center"
+            style={{
+                background: `linear-gradient(${gradient.grad1.deg}, ${gradient.grad3.color1}, ${gradient.grad3.color2} ${gradient.grad3.percentage})`,
+                color: 'black',
+                justifyContent: 'center',
+                // height: "100%"
+            }}
+        >
+            <div className="row justify-content-center">
                 {mobile && <div> Mobile Spotify Clone!!</div>}
                 {!mobile && <div> Desktop Spotify Clone!!</div>}
                 Window Width - {windowWidth},
                 Window height - {windowHeight}<br />
             </div>
-            <div className="row content bg-warning justify-content-center">
+            <div className="row justify-content-center">
                 <Switch>
                     <Route
                         path="/search"
                         render={(props) => <Search sortBy="time!" {...props} />}
                     />
                     {/* ROUTE PARAMETERS */}
-                    <Route path="/playList/:id" component={PlaylistDetails} />
+                    <Route path="/playlist/:id" component={PlaylistDetails} />
                     {/* OPTIONAL ROUTE PARAMETERS */}
                     <Route path="/feedback/:month?/:year?" component={Feedback} />
                     {/* QUERY STRING */}

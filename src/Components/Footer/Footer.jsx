@@ -8,9 +8,11 @@ import Right from './Right/Right'
 
 function Footer() {
     return (
-        <div class="container-fluid bg-success fixed-bottom m-0 p-0">
+        <div
+            className="container-fluid fixed-botto bg-secondary m-0 p-0 "
+        >
             Footer
-            <div className="row">
+            <div className="row flex-row m-0 p-0">
                 <Left />
                 <Player />
                 <Right />

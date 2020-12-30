@@ -2,7 +2,7 @@ import React from 'react'
 
 function Player() {
     return (
-        <div className="col bg-dark text-white">
+        <div className="col bg-danger text-white">
             Player
         </div>
     )
