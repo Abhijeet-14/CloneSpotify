@@ -1,25 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
-import {BrowserRouter} from 'react-router-dom'
+import { BrowserRouter } from "react-router-dom";
+//--------- CONTEXT API & REDUCER
+import { DataLayer } from "./Reducer/DataLayer";
+import reducer, { initialState } from "./Reducer/reducer";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <DataLayer initialState={initialState} reducer={reducer}>
+        <App />
+      </DataLayer>
     </BrowserRouter>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
-
-// 
+//
 if (module.hot) {
   module.hot.accept();
 }

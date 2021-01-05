@@ -1,26 +1,22 @@
-import React from 'react'
+import React from "react";
 
 //--- Components
-import Center from './Center/Center';
-import Footer from './Footer/Footer';
-import Header from './Header/Header';
-import Spotify from './Spotify';
-
+import Center from "./Center/Center";
+import Footer from "./Footer/Footer";
+import Header from "./Header/Header";
 
 function MyComponents(props) {
-    // const url = "https://localhost:3003/songs/"
-    return (
-        <div className="container-fluid min-vh-100 m-0 p-0 bg-danger">
-            <Spotify className=" m-0 p-0" />
-            <div className="d-flex flex-md-row flex-column-reverse w-100 m-0 p-0" >
-                <Header className="m-0 w-25" />
-                <Center className="m-0 p-0 w-75" />
-                {/* <div className="row bg-success m-0 p-0">
-                </div> */}
-            </div>
-            <Footer className="row m-0" />
+  return (
+    <div className="container-fluid vh-100 m-0 p-0 bg-danger ">
+      <div className="d-flex flex-md-row flex-column-reverse vh-100 m-0 p-0 bg-success">
+        <Header />
+        <div className="row bg-success m-0 p-0 w-100 col-md-10 col-12">
+          <Center />
+          <Footer />
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
 export default MyComponents;

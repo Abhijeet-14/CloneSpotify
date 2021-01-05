@@ -29,12 +29,12 @@ function Center() {
     }, [windowWidth])
 
     return (
-        <div class="container-fluid text-white align-items-center"
+        <div class="container-fluid text-white align-items-center m-0 h-md-100"
             style={{
                 background: `linear-gradient(${gradient.grad1.deg}, ${gradient.grad3.color1}, ${gradient.grad3.color2} ${gradient.grad3.percentage})`,
                 color: 'black',
                 justifyContent: 'center',
-                // height: "100%"
+                // flex: 1
             }}
         >
             <div className="row justify-content-center">
