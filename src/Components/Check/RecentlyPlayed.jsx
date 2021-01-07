@@ -1,49 +1,64 @@
 import React, { useState } from "react";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
+import { spotify } from "../../Reducer/useSpotify";
 
-function RecentlyPlayed() {
-  const [state] = useDataLayerValue();
-  const [variables, setVariables] = useState({
-    theme: "light",
-    play: "",
-  });
+function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
+  const [state, dispatch] = useDataLayerValue();
+  const [val, setVal] = useState({ theme: "dark", play: "" });
 
-  const { recentlyPlayed, token } = state;
-  const items = recentlyPlayed?.items;
-  const next = recentlyPlayed?.next;
+  const items = list?.items;
+  const next = list?.next;
+  const previous = list?.previous;
 
   //   console.log(items)
   const changeTheme = () => {
-    if (variables.theme === "light")
-      setVariables({ ...variables, theme: "dark" });
-    else setVariables({ ...variables, theme: "light" });
+    if (val.theme === "light") setVal({ ...val, theme: "dark" });
+    else setVal({ ...val, theme: "light" });
   };
 
   const changeToPlay = (val) => {
-    // if (variables.theme === "light") setVariables({...variables, theme:"dark"});
-    // else setVariables({...variables, theme:"light"});
-    setVariables({ ...variables, play: val });
+    setVal({ ...val, play: val });
   };
+
+  const shuffleLib = (link) => {
+    fetch(link + `&access_token=${token}`)
+      .then((res) => res.json())
+      .then((data) => {
+        dispatch({
+          type: "SET_YOUR_LIBRARY",
+          payload: { yourLibrary: data },
+        });
+      })
+      .catch((err) => console.log("Error shuffle: ", err));
+  };
+  //   spotify
+  //     .getMySavedTracks()
+  //     .then((res) => console.log("res: ", res))
+  //     .catch((err) => console.log("err: ", err.response));
 
   return (
     <div className="container-fluid m-0 px-1 py-0 bg-danger">
-      <h4>Recently Played </h4>
+      <h4>{title}</h4>
       {!items && <h6>Nothing to show</h6>}
       {items && (
         <>
           <div className="row justify-content-between bg-dark p-1 my-1 mx-0">
-            <a href="##">PREV</a>
+            <button
+              className="bg-info text-reset rounded p-2"
+              onClick={() => shuffleLib(previous)}
+            >
+              PREV
+            </button>
             <button onClick={changeTheme}>THEME</button>
-            <a
-              href={next + `&access_token=${token}`}
-              rel="noreferrer"
-              target="_blank"
+            <button
+              className="bg-info text-reset rounded p-2"
+              onClick={() => shuffleLib(next)}
             >
               NEXT
-            </a>
+            </button>
           </div>
           <table
-            className={`table table-${variables.theme} -bordered table-hover table-responsive`}
+            className={`table table-${val.theme} table-hover table-responsive`}
           >
             <thead className="text-left">
               <tr>
@@ -56,14 +71,13 @@ function RecentlyPlayed() {
             <tbody className="text-left">
               {items?.map((item, index) => {
                 const time = item?.track?.duration_ms / 1000;
-                const min = Math.floor(time/60);
-                var sec = Math.floor(time%60);
-                sec = (sec < 10) ? ("0" + sec) : sec;
-                
+                const min = Math.floor(time / 60);
+                var sec = Math.floor(time % 60);
+                sec = sec < 10 ? "0" + sec : sec;
                 return (
-                  <tr key={index+1}>
+                  <tr key={index + 1}>
                     <th scope="row">
-                      {variables.play !== "" ? variables.play : index + 1}
+                      {val.play !== "" ? val.play : index + 1}
                     </th>
                     <td>
                       <div className="row">
@@ -110,9 +124,7 @@ function RecentlyPlayed() {
                         {item?.track?.album?.name}
                       </a>
                     </td>
-                    <td>
-                      {min + ":" + sec}
-                    </td>
+                    <td>{min + ":" + sec}</td>
                   </tr>
                 );
               })}

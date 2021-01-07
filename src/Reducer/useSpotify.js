@@ -49,6 +49,13 @@ export const useSpotify = (dispatch) => {
           payload: { playbackState: response, playing: true },
         });
       });
+
+      spotify.getMySavedTracks().then((res) => {
+        dispatch({
+          type: "SET_YOUR_LIBRARY",
+          payload: { yourLibrary: res},
+        });
+      });
     }
   }, [dispatch]);
 };
@@ -62,17 +69,20 @@ Hence, dispatch response(newTrack) to set playingTrack to NEW TRACK
 */
 export const useTrackCheck = (track, dispatch) => {
   useEffect(() => {
+    var time = 1000;
     const check = setInterval(() => {
       spotify
         .getMyCurrentPlayingTrack()
         .then((response) => {
           if (response.item === null) {
+            time=20000;
             console.log("ADS or PAUSED");
             dispatch({
               type: "SET_ADS",
               payload: { ads: true, playingTrack: null },
             });
           } else if (response?.item?.name !== track?.name) {
+            time = 1000;
             // DISPATCHDE NEW TRACK
             console.log("DISPATCHED NEW TRACK");
             dispatch({
@@ -94,7 +104,7 @@ export const useTrackCheck = (track, dispatch) => {
           }
         })
         .catch((err) => console.log("err", err));
-    }, 1000);
+    }, time);
 
     return () => clearInterval(check);
   });

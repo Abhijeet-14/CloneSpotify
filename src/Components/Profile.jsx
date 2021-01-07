@@ -7,7 +7,7 @@ import RecentlyPlayed from "./Check/RecentlyPlayed";
 function Profile() {
   const [state, dispatch] = useDataLayerValue();
   // const [accessToken, setAccessToken] = useState("");
-  const { user, ads, playingTrack, playbackState } = state;
+  const { user, ads, playingTrack, playbackState, token, recentlyPlayed, yourLibrary } = state;
 
   const item = playingTrack?.item;
   console.log(state);
@@ -110,7 +110,8 @@ function Profile() {
             <button onClick={modVolume}>Volume</button>
           </div>
 
-          <RecentlyPlayed />
+          <RecentlyPlayed title="Your Library" token={token} list={yourLibrary}/>
+          <RecentlyPlayed title="Recently Played" token={token} list={recentlyPlayed}/>
         </>
       ) : (
         <div className="row bg-dark justify-content-center">
@@ -123,6 +124,7 @@ function Profile() {
 
 export default Profile;
 
+// STYLING
 const styles = {
   profile: {
     // display: "grid",

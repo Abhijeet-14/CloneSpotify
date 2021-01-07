@@ -3,7 +3,7 @@ export const initialState = {
     expires: 0,
     ads: false,
     recentlyPlayed: null,
-    playList: [],
+    yourLibrary: null,
     item: null,
     albums: null,
     playingTrack: null,
@@ -72,6 +72,12 @@ const reducer = (state, action) => {
         return {
             ...state,
             recentlyPlayed: action.payload.recentlyPlayed,
+        }
+
+    if(action.type === "SET_YOUR_LIBRARY")
+        return {
+            ...state,
+            yourLibrary: action.payload.yourLibrary,
         }
     return state;
 }
