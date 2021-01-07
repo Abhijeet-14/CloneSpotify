@@ -4,10 +4,10 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 // we need to add '/callback' so that it can redirect to the uri
-const redirectUri = "http://192.168.1.10:3000/";
+// const redirectUri = "http://192.168.1.10:3000/";
+const redirectUri = "https://clone-spotify-rts.netlify.app/";
 
 const clientId = "faf03f07c25447eaa635bb167bf7764e";
-// const clientSecret = "0821079c2c0c4cbfa75abd1bca051f7e";
 
 // required permission to take:
 const scopes = [
@@ -15,6 +15,7 @@ const scopes = [
   "user-read-currently-playing",
   "user-read-recently-played",
   "user-read-playback-state",
+  "user-read-email",
   "user-modify-playback-state",
 ];
 
@@ -35,3 +36,6 @@ export const getTokenFromUrl = () => {
 export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
   "%20"
 )}&response_type=token&show_dialog=true`;
+
+
+// export const refreshUrl = `${authEndpoint}?client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&grant_type=authorization_code&code=${authEndpoint}`

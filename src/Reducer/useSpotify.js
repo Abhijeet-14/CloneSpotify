@@ -4,13 +4,10 @@ import { useEffect } from "react";
 import SpotifyApi from "spotify-web-api-js";
 
 import { getTokenFromUrl } from "../Components/spotifyData";
-// import { useDataLayerValue } from "./DataLayer";
 
-const spotify = new SpotifyApi();
-// const [{token}, enDispatch] = useDataLayerValue();
+export const spotify = new SpotifyApi();
 
 export const useSpotify = (dispatch) => {
-
   useEffect(() => {
     const hash = getTokenFromUrl();
     window.location.hash = "";
@@ -39,65 +36,114 @@ export const useSpotify = (dispatch) => {
         });
       });
 
+      spotify.getMyCurrentPlayingTrack().then((response) => {
+        dispatch({
+          type: "SET_CURRENT_PLAYING_TRACK",
+          payload: { playingTrack: response, ads: false },
+        });
+      });
 
-    //   const userPlaylist = async () => {
-    //         console.log("PLAYLIST")
-    //     try {
-    //       const response = await spotify.getUserPlaylists();
-    //       console.log("UserPlaylists", response);
-    //     } catch (error) {
-    //       console.log("error", error.response);
-    //     }
-    //   };
-    // userPlaylist();
-
-    spotify.getPlaylist('4vHIKV7j4QcZwgzGQcZg1x')
-      .then( response => console.log(response) )
-      .catch( error => console.log("error", error.response) );
+      spotify.getMyCurrentPlaybackState().then((response) => {
+        dispatch({
+          type: "SET_CURRENT_PLAYBACK_STATE",
+          payload: { playbackState: response, playing: true },
+        });
+      });
     }
-    
-  }, []);
+  }, [dispatch]);
 };
 
+/*
+In Track Check by using setInterval we call the getMyCurrentTrackingPlaying()
+And we check the CURRENT TRACK NAME with RESPONSE TRACK NAME
+If Response item = null....  that means ADVERTISEMENT
+If CURRENT TRACK NAME !== RESPONSE TRACK NAME.... song has changed
+Hence, dispatch response(newTrack) to set playingTrack to NEW TRACK
+*/
+export const useTrackCheck = (track, dispatch) => {
+  useEffect(() => {
+    const check = setInterval(() => {
+      spotify
+        .getMyCurrentPlayingTrack()
+        .then((response) => {
+          if (response.item === null) {
+            console.log("ADS or PAUSED");
+            dispatch({
+              type: "SET_ADS",
+              payload: { ads: true, playingTrack: null },
+            });
+          } else if (response?.item?.name !== track?.name) {
+            // DISPATCHDE NEW TRACK
+            console.log("DISPATCHED NEW TRACK");
+            dispatch({
+              type: "SET_CURRENT_PLAYING_TRACK",
+              payload: { playingTrack: response, ads: false },
+            });
 
-export const useSpotifyCheck = () => {
-    useEffect( () => {
-        console.log("SPOTIFY-CHECK")
-    //   const tracks = async () => {
-    //     try {
-    //       const response = await spotify.searchTracks('Iktara');
-    //       console.log("response", response);
-    //     } catch (error) {
-    //       console.log("error", error.response);
-    //     }
-    //   };
+            // RECENTLY PLAYED TRACK
+            console.log("RECENTLY PLAYED TRACK");
+            spotify
+              .getMyRecentlyPlayedTracks()
+              .then((response) =>
+                dispatch({
+                  type: "SET_RECENTLY_PLAYED_TRACKS",
+                  payload: { recentlyPlayed: response },
+                })
+              )
+              .catch((err) => console.log("error: ", err.response));
+          }
+        })
+        .catch((err) => console.log("err", err));
+    }, 1000);
 
-    //   tracks();
-    },[]);
-} 
-
-
+    return () => clearInterval(check);
+  });
+  // Note: [], we didn't give any dependencies nor []
+  //        because we want to render it every seconds
+};
 
 /*
+=== GET ACCESS TOKEN ===
+    spotify.getAccessToken();
+
+=== SET ACCESS TOKEN ===
+    .setAccessToken();
+
+=== GET ME ===
+    .getMe();    - Fetches information about the current user
+
+=== GET MY CURRENT PLAYING TRACK ===
+    .getMyCurrentPlayingTrack();    - it will only work when we are listening any song
+
+=== GET MY CURRENT PLAYBACK STATE ===
+    .getMyCurrentPlaybackState();    - it will only work when we are listening any song
+
+=== GET MY RECENTLY PLAYED ===
+    .getMyRecentlyPlayedTracks()
+
 === GET ARTISTS & MULTIPLE ARTISTS ===
-    spotify.getArtist('2hazSY4Ef3aB9ATXW7F5w3');
+    .getArtist('2hazSY4Ef3aB9ATXW7F5w3');
              &&
-    spotify.getArtists(['2hazSY4Ef3aB9ATXW7F5w3', '6J6yx1t3nwIDyPXk5xa7O8']);
+    .getArtists(['2hazSY4Ef3aB9ATXW7F5w3', '6J6yx1t3nwIDyPXk5xa7O8']);
     
 === GET ALBUMS & MULTIPLE ALBUMS ===
-    spotify.getAlbum('3KyVcddATClQKIdtaap4bV');
+    .getAlbum('3KyVcddATClQKIdtaap4bV');
              &&
-    spotify.getAlbums(['5U4W9E5WsYb2jUQWePT8Xm', '3KyVcddATClQKIdtaap4bV']);
+    .getAlbums(['5U4W9E5WsYb2jUQWePT8Xm', '3KyVcddATClQKIdtaap4bV']);
 
 === SEARCH ARTISTS ===
-    spotify.searchArtists('Iktara');
+    .searchArtists('Iktara');
 
 === SEARCH TRACKS ===
-    spotify.searchTracks('Iktara');
+    .searchTracks('Iktara');
 
 === GET PLAYLIST ===
-    spotify.getPlaylist('4vHIKV7j4QcZwgzGQcZg1x')
+    .getPlaylist('4vHIKV7j4QcZwgzGQcZg1x')
 
 === GET USER PLAYLISTS ===
-    spotify.getUserPlaylists('jmperezperez')
+    .getUserPlaylists('jmperezperez')
+
+=== GET My DEVICES ===
+    spotify.getMyDevices()
+
 */

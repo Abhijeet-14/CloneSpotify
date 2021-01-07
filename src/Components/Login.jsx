@@ -23,7 +23,6 @@ const styles = {
         "display": "grid",
         "placeItems": "center",
         "backgroundColor": "black",
-
     },
     loginImg:{
         "width": "100%",

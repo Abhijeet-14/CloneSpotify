@@ -12,7 +12,6 @@ import Right from './Right/Right'
 
 function Footer() {
     const { windowWidth } = useContext(WindowDimContext)
-    
     const [mob, setMob] = useState("");
     
     useEffect((dim) => {
@@ -25,11 +24,9 @@ function Footer() {
     }, [windowWidth]);
 
     return (
-        <div
-            className={`container-fluid fixed-${mob} bg-secondary m-0 p-0`}
-        >
+        <div className={`container-fluid fixed-${mob} bg-secondary m-0 p-0 align-self-end`}>
             Footer
-            <div className="row flex-row m-0 p-0">
+            <div className="row flex-row m-0 p-0 ">
                 <Left />
                 <Player />
                 <Right />

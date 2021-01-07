@@ -4,11 +4,11 @@ import windowSize from "react-window-size";
 // CUSTOM HOOK - Communicate with Spotify SERVER
 import { useSpotify } from "./Reducer/useSpotify";
 
+import { useDataLayerValue } from "./Reducer/DataLayer";
+
 //----  Components
 import Login from "./Components/Login";
-import { useDataLayerValue } from "./Reducer/DataLayer";
 import Profile from "./Components/Profile";
-// import MyComponents from "./Components/MyComponents";
 
 export const WindowDimContext = React.createContext(windowSize);
 
@@ -18,22 +18,11 @@ function App(props) {
 
   //--- CUSTOM HOOK
   useSpotify(dispatch);
-  
-  // console.log("token ",token);
-
-  // const name = "Loading";
 
   return (
     <div className="container-fluid m-0 p-0 ">
       <WindowDimContext.Provider value={props}>
-        {token ? (
-          <section>
-            <Profile />
-          </section>
-        ) : (
-          <Login />
-        )}
-        {/* <MyComponents />  */}
+        {token ? <Profile /> : <Login />}
       </WindowDimContext.Provider>
     </div>
   );

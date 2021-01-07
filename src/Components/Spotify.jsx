@@ -24,7 +24,7 @@ function Spotify() {
     useEffect((dim) => {
         if (windowWidth < 700){
             setMob("top");
-            setDim({ ...dim, logo: "37%", icon: "8%" });
+            setDim({ ...dim, logo: "30%", icon: "8%" });
         }
         else if (windowWidth > 700 && windowWidth < 900){
             setMob("");

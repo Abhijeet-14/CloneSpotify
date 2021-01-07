@@ -15,8 +15,9 @@ function Header(props) {
 
   return (
     <div className="container-fluid bg-dark m-0 p-0 justify-content-center">
-      <Spotify />
       {!mobile && (
+        <>
+          <Spotify />
         <ul className="list-unstyled">
           <ul className="list-unstyled bg-light ">
             <li>
@@ -47,10 +48,11 @@ function Header(props) {
             <Link to="/feedback">Feedback</Link>
           </li>
         </ul>
+        </>
       )}
 
       {mobile && (
-        <ul className="list-unstyled m-0 p-0 w-100 d-flex flex-md-column justify-content-around bg-info">
+        <ul className="list-unstyled m-0 p-0 d-flex flex-md-column justify-content-around bg-warning">
           <li>
             <Link to="/home">Hom</Link>
           </li>
