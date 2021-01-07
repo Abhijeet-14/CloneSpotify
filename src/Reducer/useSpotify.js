@@ -8,24 +8,53 @@ import { getTokenFromUrl } from "../Components/spotifyData";
 export const spotify = new SpotifyApi();
 
 export const useSpotify = (dispatch) => {
+
   useEffect(() => {
     const hash = getTokenFromUrl();
     window.location.hash = "";
 
-    const { access_token, expires_in } = hash;
+    const {access_token, expires_in} = hash; 
+    const token = access_token;
 
-    if (access_token) {
+    /*    // CODE FROM URL
+    const search = getCodeFromUrl();
+    const { code } = search;
+    // window.location.search = "xyz";
+
+    const refr = async () => {
+      await fetch(`https://accounts.spotify.com/api/token?grant_type=authorization_code&code=${code}&redirect_uri=${"http://192.168.1.10:3000/"}`,{
+          headers: {
+            Authorization: "Basic ZmFmMDNmMDdjMjU0NDdlYWE2MzViYjE2N2JmNzc2NGU6MDgyMTA3OWMyYzBjNGNiZmE3NWFiZDFiY2EwNTFmN2U=",
+            "Content-Type": "application/x-www-form-urlencoded",},
+          method: "POST",})
+        .then((res) => res.json())
+        .then((data) =>
+          dispatch({
+            type: "SET_NEWVAL",
+            payload: { newVal: data },
+          })
+        )
+        .catch((err) => console.log("please: ", err));
+    };
+
+    refr();
+      */
+
+    // window.location.search = "";
+    // console.log(state);
+
+    if (token) {
       //--- set token
       dispatch({
         type: "SET_TOKEN",
         payload: {
-          token: access_token,
+          token: token,
           expires: expires_in,
         },
       });
 
       // this will set token bw our App and spotify-server
-      spotify.setAccessToken(access_token);
+      spotify.setAccessToken(token);
 
       //gets user data:
       spotify.getMe().then((user) => {
@@ -53,11 +82,11 @@ export const useSpotify = (dispatch) => {
       spotify.getMySavedTracks().then((res) => {
         dispatch({
           type: "SET_YOUR_LIBRARY",
-          payload: { yourLibrary: res},
+          payload: { yourLibrary: res },
         });
       });
     }
-  }, [dispatch]);
+  }, []);
 };
 
 /*
@@ -76,7 +105,7 @@ export const useTrackCheck = (track, dispatch) => {
         .getMyCurrentPlayingTrack()
         .then((response) => {
           if (response.item === null) {
-            setTime(20000);
+            setTime(5000);
             console.log("ADS or PAUSED");
             dispatch({
               type: "SET_ADS",

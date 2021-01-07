@@ -1,12 +1,18 @@
 import React from "react";
 import { spotify } from "../../Reducer/useSpotify";
+import {useDataLayerValue} from '../../Reducer/DataLayer';
 
 function PlayerButton() {
-  const pausePlay = () => {
-    spotify
-      .play()
-      .then((res) => console.log(res))
-      .catch((err) => console.log("err: ", err.res));
+  const [{ token }, dispatch] = useDataLayerValue();
+
+  const pausePlay = async () => {
+    // spotify.play()
+    await fetch(`https://api.spotify.com/v1/me/player/pause&access_token=${token}`, {
+      method : 'POST',
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      // .catch((err) => console.log("err: ", err));
   };
 
   const playNext = () => {

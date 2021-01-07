@@ -11,16 +11,23 @@ export const initialState = {
     play: false,
     next: false,
     pause: false,
+    newVToken: null,
     token:  null,
     // "BQDPHCQap3lzJjPnsDZiLU-tb9gAWjuQWaoFd5q1QNLOQfo5ibU2YbJdh56yoDDg1p72xU-m4VgFuSf_88EG2ADh99bTujspL9bsjKMqulnqr2xLrhPnYniyiCSBRroaTA4usBHHXeCM6dSyeG3yd0nNVKYJyqMNBb6AmsyLRhrJNt3g9HXy",
 }
 
 const reducer = (state, action) => {
-    // console.log(action)
+    console.log(action)
     if(action.type === 'SET_USER')
         return {
             ...state,
             user: action.payload.user
+        }
+
+    if(action.type === 'SET_NEWVAL')
+        return {
+            ...state,
+            newVal: action.payload.newVal
         }
     
     if(action.type === 'SET_TOKEN')

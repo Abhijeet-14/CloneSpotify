@@ -3,7 +3,6 @@ import windowSize from "react-window-size";
 
 // CUSTOM HOOK - Communicate with Spotify SERVER
 import { useSpotify } from "./Reducer/useSpotify";
-
 import { useDataLayerValue } from "./Reducer/DataLayer";
 
 //----  Components
@@ -14,7 +13,7 @@ export const WindowDimContext = React.createContext(windowSize);
 
 
 function App(props) {
-  const [{ token }, dispatch] = useDataLayerValue();
+  const [{token}, dispatch] = useDataLayerValue();
 
   //--- CUSTOM HOOK
   useSpotify(dispatch);

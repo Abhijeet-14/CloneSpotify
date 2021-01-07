@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDataLayerValue } from "../Reducer/DataLayer";
 import { loginUrl } from "./spotifyData";
-import { useTrackCheck } from "../Reducer/useSpotify";
+import { spotify, useTrackCheck } from "../Reducer/useSpotify";
 import RecentlyPlayed from "./Check/RecentlyPlayed";
 import PlayerButton from "./Check/PlayerButton";
 
@@ -9,9 +9,17 @@ function Profile() {
   const [state, dispatch] = useDataLayerValue();
   const { user, ads, playingTrack, token, recentlyPlayed, yourLibrary } = state;
 
-  const item = playingTrack?.item;
   console.log(state);
 
+  // useEffect(() => {
+    // fetch(`https://api.spotify.com/v1/me/player/pause?access_token=${access_token}`, {method: "PUT",})
+    // .then((res) => res.json())
+    // .then((data) => console.log("Data: ",data))
+    // .catch((err) => console.log("err: ", err.error));
+
+  // }, [dispatch]);
+
+  const item = playingTrack?.item
   //--- TRACK CHECK
   useTrackCheck(item, dispatch);
 
@@ -25,6 +33,7 @@ function Profile() {
       >
         Refersh Token
       </a>
+
       {user && (
         <div className="row my-3 align-items-center justify-content-center">
           <img

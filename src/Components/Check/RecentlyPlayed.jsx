@@ -3,7 +3,7 @@ import { useDataLayerValue } from "../../Reducer/DataLayer";
 import { spotify } from "../../Reducer/useSpotify";
 
 function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
-  const [state, dispatch] = useDataLayerValue();
+  const [dispatch] = useDataLayerValue();
   const [val, setVal] = useState({ theme: "dark", play: "" });
 
   const items = list?.items;
@@ -31,10 +31,6 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
       })
       .catch((err) => console.log("Error shuffle: ", err));
   };
-  //   spotify
-  //     .getMySavedTracks()
-  //     .then((res) => console.log("res: ", res))
-  //     .catch((err) => console.log("err: ", err.response));
 
   return (
     <div className="container-fluid m-0 px-1 py-0 bg-danger">
@@ -60,7 +56,7 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
             </button>
           </div>
           <table
-            className={`table table-${val.theme} table-hover table-responsive`}
+            className={`table table-${val.theme} table-hover table-responsiv`}
           >
             <thead className="text-left">
               <tr>
@@ -77,11 +73,13 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
                 var sec = Math.floor(time % 60);
                 sec = sec < 10 ? "0" + sec : sec;
                 return (
-                  <tr key={index + 1}>
-                    <th scope="row">
+                  <tr key={index + 1} >
+                    <th scope="row" className="align-items-baseline bg-warning p-0 m-0">
+                      <div className="bg-danger p-0 m-0">
                       {val.play !== "" ? val.play : index + 1}
+                      </div>
                     </th>
-                    <td>
+                    <td className="">
                       <div className="row">
                         <img
                           src={item?.track?.album?.images[2]?.url}
