@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 /* this is a lightweight wrapper for Spotify-Web-Api */
 import SpotifyApi from "spotify-web-api-js";
@@ -68,21 +68,22 @@ If CURRENT TRACK NAME !== RESPONSE TRACK NAME.... song has changed
 Hence, dispatch response(newTrack) to set playingTrack to NEW TRACK
 */
 export const useTrackCheck = (track, dispatch) => {
+  const [time, setTime] = useState(1000);
+
   useEffect(() => {
-    var time = 1000;
     const check = setInterval(() => {
       spotify
         .getMyCurrentPlayingTrack()
         .then((response) => {
           if (response.item === null) {
-            time=20000;
+            setTime(20000);
             console.log("ADS or PAUSED");
             dispatch({
               type: "SET_ADS",
               payload: { ads: true, playingTrack: null },
             });
           } else if (response?.item?.name !== track?.name) {
-            time = 1000;
+            setTime(1000);
             // DISPATCHDE NEW TRACK
             console.log("DISPATCHED NEW TRACK");
             dispatch({

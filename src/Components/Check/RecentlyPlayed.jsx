@@ -10,7 +10,7 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
   const next = list?.next;
   const previous = list?.previous;
 
-  //   console.log(items)
+    // console.log(!next)
   const changeTheme = () => {
     if (val.theme === "light") setVal({ ...val, theme: "dark" });
     else setVal({ ...val, theme: "light" });
@@ -44,15 +44,17 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
         <>
           <div className="row justify-content-between bg-dark p-1 my-1 mx-0">
             <button
-              className="bg-info text-reset rounded p-2"
               onClick={() => shuffleLib(previous)}
+              className="bg-info text-reset rounded p-2"
+              disabled={!previous}
             >
               PREV
             </button>
             <button onClick={changeTheme}>THEME</button>
             <button
-              className="bg-info text-reset rounded p-2"
               onClick={() => shuffleLib(next)}
+              className="bg-info text-reset rounded p-2"
+              disabled={!next}
             >
               NEXT
             </button>

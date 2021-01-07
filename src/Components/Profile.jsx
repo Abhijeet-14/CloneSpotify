@@ -1,47 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDataLayerValue } from "../Reducer/DataLayer";
 import { loginUrl } from "./spotifyData";
-import { spotify, useTrackCheck } from "../Reducer/useSpotify";
+import { useTrackCheck } from "../Reducer/useSpotify";
 import RecentlyPlayed from "./Check/RecentlyPlayed";
+import PlayerButton from "./Check/PlayerButton";
 
 function Profile() {
   const [state, dispatch] = useDataLayerValue();
-  // const [accessToken, setAccessToken] = useState("");
-  const { user, ads, playingTrack, playbackState, token, recentlyPlayed, yourLibrary } = state;
+  const { user, ads, playingTrack, token, recentlyPlayed, yourLibrary } = state;
 
   const item = playingTrack?.item;
   console.log(state);
 
   //--- TRACK CHECK
   useTrackCheck(item, dispatch);
-
-  const pausePlay = () => {
-    spotify
-      .play({ device_id: playbackState?.device.id })
-      .then((response) => console.log(response))
-      .catch((err) => console.log("err: ", err.response));
-  };
-
-  const playNext = () => {
-    spotify
-      .skipToNext({ device_id: playbackState?.device?.id })
-      .then((response) => console.log(response))
-      .catch((err) => console.log("err: ", err.response));
-  };
-
-  const playPrev = () => {
-    spotify
-      .skipToPrev({ device_id: playbackState?.device?.id })
-      .then((response) => console.log(response))
-      .catch((err) => console.log("err: ", err.response));
-  };
-
-  const modVolume = () => {
-    spotify
-      .setVolume({ volume_percent: 20 })
-      .then((response) => console.log(response))
-      .catch((err) => console.log("err: ", err.response));
-  };
 
   return (
     <div className="container-fluid vh-100 text-white" style={styles.profile}>
@@ -102,13 +74,8 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className="row justify-content-around">
-            <button onClick={pausePlay}>play</button>
-            <button onClick={playPrev}>prev</button>
-            <button onClick={pausePlay}>pause</button>
-            <button onClick={playNext}>next</button>
-            <button onClick={modVolume}>Volume</button>
-          </div>
+          
+          <PlayerButton />
 
           <RecentlyPlayed title="Your Library" token={token} list={yourLibrary}/>
           <RecentlyPlayed title="Recently Played" token={token} list={recentlyPlayed}/>
