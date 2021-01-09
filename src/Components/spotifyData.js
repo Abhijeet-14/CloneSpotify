@@ -4,8 +4,8 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 // we need to add '/callback' so that it can redirect to the uri
-// const redirectUri = "http://192.168.1.10:3000/";
-const redirectUri = "https://clone-spotify-rts.netlify.app/";
+const redirectUri = "http://192.168.1.10:3000/";
+// const redirectUri = "https://clone-spotify-rts.netlify.app/";
 
 const clientId = "faf03f07c25447eaa635bb167bf7764e";
 // const clientSecret = "0821079c2c0c4cbfa75abd1bca051f7e"
@@ -17,6 +17,7 @@ const clientId = "faf03f07c25447eaa635bb167bf7764e";
 // SCOPE: required permission to take
 //      https://developer.spotify.com/documentation/general/guides/scopes/
 const scopes = [
+  "streaming",
   "user-top-read",
   "user-read-currently-playing",
   "user-read-recently-played",
@@ -24,6 +25,8 @@ const scopes = [
   "user-library-read", //  Read access to a user's "Your Music" library
   "user-read-playback-state",
   "user-modify-playback-state",
+  "user-read-private",
+
 ];
 
 //extract ACCESS TOKEN from URL
@@ -58,9 +61,42 @@ export const getCodeFromUrl = () => {
 // TOKEN
 export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
   "%20"
-)}&response_type=token&show_dialog=true&state=34fFs29kd09`;
+)}&response_type=token&show_dialog=true`;
 
 // CODE
 // export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
 //   "%20"
 // )}&response_type=code&show_dialog=true&state=34fFs29kd09`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "ugc-image-upload",
+// "user-read-recently-played",
+// "user-top-read",
+// "user-read-playback-position",
+// "user-read-playback-state",
+// "user-modify-playback-state",
+// "user-read-currently-playing",
+// "app-remote-control",
+// "streaming",
+// "playlist-modify-public",
+// "playlist-modify-private",
+// "playlist-read-private",
+// "playlist-read-collaborative",
+// "user-follow-modify",
+// "user-follow-read",
+// "user-library-modify",
+// "user-library-read",
+// "user-read-email"
+// "user-read-private"

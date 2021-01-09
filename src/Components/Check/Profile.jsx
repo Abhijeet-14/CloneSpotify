@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDataLayerValue } from "../Reducer/DataLayer";
-import { loginUrl } from "./spotifyData";
-import { spotify, useTrackCheck } from "../Reducer/useSpotify";
-import RecentlyPlayed from "./Check/RecentlyPlayed";
-import PlayerButton from "./Check/PlayerButton";
+import React from "react";
+import { useDataLayerValue } from "../../Reducer/DataLayer";
+import { loginUrl } from "../spotifyData";
+import { useTrackCheck } from "../../Reducer/useSpotify";
+import PlayerButton from "./PlayerButton";
+import TrackList from "./TrackList";
 
 function Profile() {
   const [state, dispatch] = useDataLayerValue();
@@ -11,20 +11,16 @@ function Profile() {
 
   console.log(state);
 
-  // useEffect(() => {
-    // fetch(`https://api.spotify.com/v1/me/player/pause?access_token=${access_token}`, {method: "PUT",})
-    // .then((res) => res.json())
-    // .then((data) => console.log("Data: ",data))
-    // .catch((err) => console.log("err: ", err.error));
+  const item = playingTrack?.item;
 
-  // }, [dispatch]);
-
-  const item = playingTrack?.item
   //--- TRACK CHECK
   useTrackCheck(item, dispatch);
 
   return (
-    <div className="container-fluid vh-100 text-white" style={styles.profile}>
+    <div
+      className="container-fluid nin-vh-100 text-white"
+      style={styles.profile}
+    >
       <h3 className="row justify-content-center">Welcome to profile!!</h3>
       <a
         href={loginUrl}
@@ -48,7 +44,7 @@ function Profile() {
 
       {!ads && item ? (
         <>
-          <h2>Current Track:</h2>
+          <h2 id="player">Current Track:</h2>
           <div className="bg-dark row justify-content-center">
             <img
               src={item?.album?.images[1]?.url}
@@ -60,7 +56,11 @@ function Profile() {
             />
             <div className="col align-self-end text-center text-sm-left">
               <div>
-                <a href={item?.external_urls.spotify} target="_blank" rel='noreferrer'>
+                <a
+                  href={item?.external_urls.spotify}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <span className="text-truncate">{item?.name}</span> {"("}
                   {Math.floor(item?.duration_ms / 60000)}
                   {":"}
@@ -77,17 +77,31 @@ function Profile() {
                 ))}
               </div>
               <div>
-                <a href={item?.album?.external_urls?.spotify} target="_blank" rel='noreferrer'>
+                <a
+                  href={item?.album?.external_urls?.spotify}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <span className="">{item?.album?.name}</span>
                 </a>
               </div>
             </div>
           </div>
-          
+
           <PlayerButton />
 
-          <RecentlyPlayed title="Your Library" token={token} list={yourLibrary}/>
-          <RecentlyPlayed title="Recently Played" token={token} list={recentlyPlayed}/>
+          <TrackList
+            title="Your Library"
+            token={token}
+            list={yourLibrary}
+            key={1}
+          />
+          <TrackList
+            title="Recently Played"
+            token={token}
+            list={recentlyPlayed}
+            key={2}
+          />
         </>
       ) : (
         <div className="row bg-dark justify-content-center">
@@ -105,7 +119,7 @@ const styles = {
   profile: {
     // display: "grid",
     // placeItems: "center",
-    backgroundColor: "black",
+    backgroundColor: "#987654",
     fontSize: "15px",
   },
   refresh: {

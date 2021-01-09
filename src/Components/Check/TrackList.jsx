@@ -2,22 +2,18 @@ import React, { useState } from "react";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
 import { spotify } from "../../Reducer/useSpotify";
 
-function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
-  const [dispatch] = useDataLayerValue();
+function TrackList({ list, token, title = "<Playlist_Name>" }) {
+  const [state, dispatch] = useDataLayerValue();
   const [val, setVal] = useState({ theme: "dark", play: "" });
 
   const items = list?.items;
   const next = list?.next;
   const previous = list?.previous;
 
-    // console.log(!next)
+  // console.log(!next)
   const changeTheme = () => {
     if (val.theme === "light") setVal({ ...val, theme: "dark" });
     else setVal({ ...val, theme: "light" });
-  };
-
-  const changeToPlay = (val) => {
-    setVal({ ...val, play: val });
   };
 
   const shuffleLib = (link) => {
@@ -32,13 +28,22 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
       .catch((err) => console.log("Error shuffle: ", err));
   };
 
+  const play = async (spotify_uri) => {
+    const device_id = "2b8f17ab5271e7597d5e7f8b69a4b16318141501";
+
+    await spotify
+      .play({ device_id, uris: [spotify_uri] })
+      .then(() => console.log("Play!!"))
+      .catch((err) => console.log("err-play: ", err));
+  };
+
   return (
-    <div className="container-fluid m-0 px-1 py-0 bg-danger">
-      <h4>{title}</h4>
+    <div className="container-fluid my-2 p-1" style={{ background: "#181818" }}>
+      <h4 className="text-center">{title}</h4>
       {!items && <h6>Nothing to show</h6>}
       {items && (
         <>
-          <div className="row justify-content-between bg-dark p-1 my-1 mx-0">
+          <div className="row justify-content-between p-1 my-1 mx-0">
             <button
               onClick={() => shuffleLib(previous)}
               className="bg-info text-reset rounded p-2"
@@ -55,10 +60,8 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
               NEXT
             </button>
           </div>
-          <table
-            className={`table table-${val.theme} table-hover table-responsiv`}
-          >
-            <thead className="text-left">
+          <table className={`table table-${val.theme} table-hover `}>
+            <thead className="text-center text-sm-left">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">TITLE</th>
@@ -73,32 +76,33 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
                 var sec = Math.floor(time % 60);
                 sec = sec < 10 ? "0" + sec : sec;
                 return (
-                  <tr key={index + 1} >
-                    <th scope="row" className="align-items-baseline bg-warning p-0 m-0">
-                      <div className="bg-danger p-0 m-0">
+                  // <a href="#player" >
+                  <tr
+                    key={index + 1}
+                    className="m-0 p-0 border-0"
+                    onDoubleClick={() => play(item?.track?.uri)}
+                    // style={{ }}
+                    onMouseOver={() => console.log("Hovering!!")}
+                  >
+                    <th
+                      scope="row"
+                      className="p-0 m-0 align-middle text-center"
+                    >
                       {val.play !== "" ? val.play : index + 1}
-                      </div>
                     </th>
-                    <td className="">
-                      <div className="row">
-                        <img
-                          src={item?.track?.album?.images[2]?.url}
-                          alt={item?.track?.name}
-                          height={item?.track?.album?.images[2]?.height + "px"}
-                          width={item?.track?.album?.images[2]?.width + "px"}
-                          className=""
-                        />
-                        <span className="pl-0 pl-sm-1">
-                          <a
-                            href={item?.track?.external_urls?.spotify}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-reset"
-                          >
-                            {item?.track?.name}
-                          </a>
-                          <br />
+                    <td className="row p-1 m-0 border-top-0  justify-content-center">
+                      <img
+                        src={item?.track?.album?.images[2]?.url}
+                        alt={item?.track?.name}
+                        height={item?.track?.album?.images[2]?.height + "px"}
+                        width={item?.track?.album?.images[2]?.width + "px"}
+                        className="align-self-center p-1"
+                      />
+                      <div className="col p-2 m-0 align-self-center text-center text-sm-left">
+                        {item?.track?.name}
+                        <div className="">
                           {item?.track?.artists?.map((artist, index) => {
+                            if (index > 1) return <>..</>;
                             return (
                               <a
                                 href={artist?.external_urls?.spotify}
@@ -111,20 +115,22 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
                               </a>
                             );
                           })}
-                        </span>
+                        </div>
                       </div>
                     </td>
-                    <td>
-                      <a
-                        href={item?.track?.album?.external_urls?.spotify}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-reset "
-                      >
-                        {item?.track?.album?.name}
-                      </a>
+                    <td className="p-1 m-0 align-middle text-center text-sm-left">
+                      <div className="p-1">
+                        <a
+                          href={item?.track?.album?.external_urls?.spotify}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-reset"
+                        >
+                          {item?.track?.album?.name}
+                        </a>
+                      </div>
                     </td>
-                    <td>{min + ":" + sec}</td>
+                    <td className="align-middle">{min + ":" + sec}</td>
                   </tr>
                 );
               })}
@@ -136,4 +142,4 @@ function RecentlyPlayed({ list, token, title = "<Playlist_Name>" }) {
   );
 }
 
-export default RecentlyPlayed;
+export default TrackList;
