@@ -58,7 +58,7 @@ export const getCodeFromUrl = () => {
     }, {});
 };
 
-const token_type = "code"; // "token"; 
+const token_type = "token"; // "code"; 
 // TOKEN
 export const loginUrl = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
   "%20"

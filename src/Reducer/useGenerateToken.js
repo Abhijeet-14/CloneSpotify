@@ -7,7 +7,6 @@ export const useCodeToToken = (dispatch) => {
     // CODE FROM URL
     const search = getCodeFromUrl();
     const { code } = search;
-    // window.location.search = "xyz";
 
     const refr = async () => {
       await fetch(
@@ -33,7 +32,7 @@ export const useCodeToToken = (dispatch) => {
         })
         .catch((err) => console.log("please: ", err));
 
-        // window.location.search = 
+        // window.location.search = "?"
     };
 
     refr();

@@ -12,16 +12,15 @@ import { useCodeToToken, useUrlToToken } from "./Reducer/useGenerateToken";
 export const WindowDimContext = React.createContext(windowSize);
 
 function App(props) {
-  const [{token}, dispatch] = useDataLayerValue();
-
+  const [{ token }, dispatch] = useDataLayerValue();
 
   // Generate Token BY URL
-  // useUrlToToken(dispatch)
-  
-  // Generate Token BY CODE
-  useCodeToToken(dispatch)
-  
+  useUrlToToken(dispatch)
 
+  // Generate Token BY CODE
+  // useCodeToToken(dispatch);
+
+  // window.location.search = "?";
   return (
     <div className="container-fluid m-0 p-0 ">
       <WindowDimContext.Provider value={props}>
@@ -32,11 +31,6 @@ function App(props) {
 }
 
 export default windowSize(App);
-
-
-
-
-
 
 // import React, { Component } from "react";
 // import Script from "react-load-script";
@@ -65,7 +59,7 @@ export default windowSize(App);
 //       }, {});
 
 //     const { access_token } = hash;
-    
+
 //     this.setState({ __token: access_token});
 
 //     window.onSpotifyWebPlaybackSDKReady = () => {
