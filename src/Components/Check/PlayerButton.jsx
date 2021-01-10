@@ -1,6 +1,6 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 //
-import { spotify } from "../../Reducer/useSpotify";
+import { spotify, useSpotify } from "../../Reducer/useSpotify";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
 
 // Component
@@ -8,13 +8,14 @@ import CurrentTrack from "./CurrentTrack";
 import VolumeManage from "./VolumeManage";
 
 // Icons
-import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline'
-import SkipPrevious from '@material-ui/icons/SkipPrevious'
-import SkipNext from '@material-ui/icons/SkipNext'
+import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
+import SkipPrevious from "@material-ui/icons/SkipPrevious";
+import SkipNext from "@material-ui/icons/SkipNext";
 
 function PlayerButton({ item }) {
+  const [{ playingState }, dispatch] = useDataLayerValue();
   const [state, setState] = useState({
-    playState: false,
+    playState: playingState?.is_playing,
   });
 
   // Pause - Play
@@ -53,8 +54,6 @@ function PlayerButton({ item }) {
       .catch((err) => console.log("err-previous: ", err.res));
   };
 
-
-
   return (
     <>
       <div className="container-fluid fixed-bottom bg-success m-0 p-0">
@@ -79,5 +78,3 @@ function PlayerButton({ item }) {
 }
 
 export default PlayerButton;
-
-

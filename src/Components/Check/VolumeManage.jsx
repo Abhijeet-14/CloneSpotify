@@ -21,10 +21,14 @@ const VolumeManage = () => {
     var volume = 80;
     state.mute ? (volume = 0) : (volume = state.vol);
 
-    spotify
-      .setVolume(volume)
-      // .then(() => console.log("Volume!!", state.vol))
-      .catch((err) => console.log("err-volume: ", err));
+    const changeVolume = async () => {
+      await spotify
+        .setVolume(volume)
+        // .then(() => console.log("Volume!!", state.vol))
+        .catch((err) => console.log("err-volume: ", err));
+    };
+
+    changeVolume();
   }, [state]);
 
   const handleChange = (event, newVol) => {

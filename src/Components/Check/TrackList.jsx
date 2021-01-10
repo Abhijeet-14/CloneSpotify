@@ -10,7 +10,6 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
   const next = list?.next;
   const previous = list?.previous;
 
-  // console.log(!next)
   const changeTheme = () => {
     if (val.theme === "light") setVal({ ...val, theme: "dark" });
     else setVal({ ...val, theme: "light" });
@@ -35,8 +34,9 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
   };
 
   const play = async (spotify_uri) => {
+    // const device_id = "1ccff34fa3935ea7c72aea368ba646d87587ef45";
     // .play({ device_id, uris: [spotify_uri] })
-
+    
     // If device_id is not given, it plays song in current active device
     await spotify
       .play({ uris: [spotify_uri] })

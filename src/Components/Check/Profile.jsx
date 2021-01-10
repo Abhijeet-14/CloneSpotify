@@ -1,6 +1,6 @@
 import React from "react";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
-import { useTrackCheck } from "../../Reducer/useSpotify";
+import { useSpotify, useTrackCheck } from "../../Reducer/useSpotify";
 
 //Components
 import Account from "./Account";
@@ -17,7 +17,7 @@ function Profile() {
 
   const item = playingTrack?.item;
 
-  //--- TRACK CHECK
+  //--- TRACK CHECK 
   useTrackCheck(item, dispatch);
 
   return (

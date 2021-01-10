@@ -1,7 +1,9 @@
-import { Button } from "@material-ui/core";
 import React from "react";
+// import SpotifyPlayer from "react-spotify-web-playback";
+
 import { useDataLayerValue } from "../../Reducer/DataLayer";
 import { spotify } from "../../Reducer/useSpotify";
+// import { Button } from "@material-ui/core";
 
 function Transfer() {
   const [{ token }, dispatch] = useDataLayerValue();
@@ -32,6 +34,10 @@ function Transfer() {
   return (
     <div className="fixed-top">
       <button onClick={transfer}>Transfer</button>
+      {/* <SpotifyPlayer
+        token={token}
+        uris={["spotify:artist:6HQYnRM4OzToCYPpVBInuU"]}
+      /> */}
     </div>
   );
 }

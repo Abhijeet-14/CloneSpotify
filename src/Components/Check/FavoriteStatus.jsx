@@ -5,7 +5,7 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder'
 
 function FavoriteSatuts() {
     return (
-        <div>
+        <div onClick = { () => console.log("Whooaa!! You liked it.")}>
             <Favorite />
             <FavoriteBorder />
         </div>

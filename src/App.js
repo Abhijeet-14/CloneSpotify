@@ -2,21 +2,25 @@ import React from "react";
 import windowSize from "react-window-size";
 
 // CUSTOM HOOK - Communicate with Spotify SERVER
-import { useSpotify } from "./Reducer/useSpotify";
 import { useDataLayerValue } from "./Reducer/DataLayer";
 
 //----  Components
 import Login from "./Components/Login";
 import Profile from "./Components/Check/Profile";
+import { useCodeToToken, useUrlToToken } from "./Reducer/useGenerateToken";
 
 export const WindowDimContext = React.createContext(windowSize);
 
 function App(props) {
-  const [{ token }, dispatch] = useDataLayerValue();
+  const [{token}, dispatch] = useDataLayerValue();
 
-  window._token = token;
-  //--- CUSTOM HOOK
-  useSpotify(dispatch);
+
+  // Generate Token BY URL
+  // useUrlToToken(dispatch)
+  
+  // Generate Token BY CODE
+  useCodeToToken(dispatch)
+  
 
   return (
     <div className="container-fluid m-0 p-0 ">
