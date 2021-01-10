@@ -4,7 +4,7 @@ import { spotify } from "../../Reducer/useSpotify";
 
 function TrackList({ list, token, title = "<Playlist_Name>" }) {
   const [state, dispatch] = useDataLayerValue();
-  const [val, setVal] = useState({ theme: "dark", play: "" });
+  const [val, setVal] = useState({ theme: "dark", play: null });
 
   const items = list?.items;
   const next = list?.next;
@@ -14,6 +14,12 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
   const changeTheme = () => {
     if (val.theme === "light") setVal({ ...val, theme: "dark" });
     else setVal({ ...val, theme: "light" });
+  };
+
+  const isPlay = () => {
+    val.play === "P"
+      ? setVal({ ...val, play: null })
+      : setVal({ ...val, play: "P" });
   };
 
   const shuffleLib = (link) => {
@@ -29,10 +35,11 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
   };
 
   const play = async (spotify_uri) => {
-    const device_id = "2b8f17ab5271e7597d5e7f8b69a4b16318141501";
+    // .play({ device_id, uris: [spotify_uri] })
 
+    // If device_id is not given, it plays song in current active device
     await spotify
-      .play({ device_id, uris: [spotify_uri] })
+      .play({ uris: [spotify_uri] })
       .then(() => console.log("Play!!"))
       .catch((err) => console.log("err-play: ", err));
   };
@@ -75,20 +82,22 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
                 const min = Math.floor(time / 60);
                 var sec = Math.floor(time % 60);
                 sec = sec < 10 ? "0" + sec : sec;
+                var isMuted = item?.track?.available_markets.length !== 0 ? "--" : "mute";
                 return (
-                  // <a href="#player" >
                   <tr
                     key={index + 1}
-                    className="m-0 p-0 border-0"
+                    className={`m-0 p-0 border-0 text-${isMuted}`}
+                    style={{ cursor: "default" }}
                     onDoubleClick={() => play(item?.track?.uri)}
-                    // style={{ }}
-                    onMouseOver={() => console.log("Hovering!!")}
+                    onMouseLeave={isPlay}
+                    onMouseEnter={isPlay}
                   >
                     <th
                       scope="row"
                       className="p-0 m-0 align-middle text-center"
                     >
-                      {val.play !== "" ? val.play : index + 1}
+                      {/* {val.play !== "" ? val.play : index + 1} */}
+                      {val.play || index + 1}
                     </th>
                     <td className="row p-1 m-0 border-top-0  justify-content-center">
                       <img

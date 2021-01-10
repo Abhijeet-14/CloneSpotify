@@ -4,8 +4,8 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
 // we need to add '/callback' so that it can redirect to the uri
-// const redirectUri = "http://192.168.1.10:3000/";
-const redirectUri = "https://clone-spotify-rts.netlify.app/";
+const redirectUri = "http://192.168.1.10:3000/";
+// const redirectUri = "https://clone-spotify-rts.netlify.app/";
 
 const clientId = "faf03f07c25447eaa635bb167bf7764e";
 // const clientSecret = "0821079c2c0c4cbfa75abd1bca051f7e"

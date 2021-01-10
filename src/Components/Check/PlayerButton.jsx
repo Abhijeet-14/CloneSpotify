@@ -1,79 +1,42 @@
-import React from "react";
+import React, {useState } from "react";
+//
 import { spotify } from "../../Reducer/useSpotify";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
 
-function PlayerButton() {
-  const [{ token }, dispatch] = useDataLayerValue();
+// Component
+import CurrentTrack from "./CurrentTrack";
+import VolumeManage from "./VolumeManage";
 
-  const transfer = () => {
-    console.log("Transferring");
+// Icons
+import PlayCircleOutline from '@material-ui/icons/PlayCircleOutline'
+import SkipPrevious from '@material-ui/icons/SkipPrevious'
+import SkipNext from '@material-ui/icons/SkipNext'
 
-    const device_id = "";
-    spotify
-      .getMyDevices()
-      .then((res) => console.log(res))
-      .catch((err) => console.log("Err-device: ", err));
+function PlayerButton({ item }) {
+  const [state, setState] = useState({
+    playState: false,
+  });
 
-    fetch("https://api.spotify.com/v1/me/player", {
-      body: JSON.stringify({ device_ids: [device_id] }),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((data) => console.log("data: ", data))
-      .catch((err) => console.log("err: ", err));
-
-    // const transs = ({
-    //   playerInstance: {
-    //     _options: { getOAuthToken, id },
-    //   },
-    // }) => {
-    //   console.log(id, getOAuthToken);
-    //   getOAuthToken((token) => {
-    //     fetch(`https://api.spotify.com/v1/me/player`, {
-    //       method: "PUT",
-    //       body: JSON.stringify({ device_ids: [id] }),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     })
-    //       .then((res) => res.json())
-    //       .then((data) => console.log("data: ", data))
-    //       .catch((err) => console.log("err: ", err));
-    //   });
-    // };
-
-    // transs({
-    //   playerInstance: new window.Spotify.Player({
-    //     name: "ABJ--",
-    //     getOAuthToken: (cb) => cb(token),
-    //   })
-    // });
-
-    // console.log(device_id);
-    // spotify.transferMyPlayback( JSON.stringify( {deviceIDs: [device_id]} ) )
-    //   .then(res => console.log("res: ", console.log(res)))
-    //   .catch(err => console.log("err: ", console.log(err.response)));
+  // Pause - Play
+  const pausePlay = async () => {
+    state.playState
+      ? await spotify
+          .pause()
+          .then(() => {
+            setState({ ...state, playState: false });
+            console.log("Paused!!");
+          })
+          .catch((err) => console.log("err-pause: ", err))
+      : await spotify
+          .play()
+          .then(() => {
+            setState({ ...state, playState: true });
+            console.log("Play!!");
+          })
+          .catch((err) => console.log("err-pause: ", err));
   };
 
-  const pause = async () => {
-    spotify
-      .pause()
-      .then(() => console.log("Paused!!"))
-      .catch((err) => console.log("err-pause: ", err));
-  };
-  
-  const play = async () => {
-    spotify
-      .play()
-      .then(() => console.log("Play!!"))
-      .catch((err) => console.log("err-play: ", err));
-  };
-
+  // Next
   const playNext = () => {
     console.log("NEXT!!");
     spotify
@@ -82,6 +45,7 @@ function PlayerButton() {
       .catch((err) => console.log("err-next: ", err.res));
   };
 
+  // Previous
   const playPrevious = () => {
     spotify
       .skipToPrevious()
@@ -89,25 +53,31 @@ function PlayerButton() {
       .catch((err) => console.log("err-previous: ", err.res));
   };
 
-  const modVolume = () => {
-    spotify
-      .setVolume(30)
-      .then(() => console.log("Volume!!"))
-      .catch((err) => console.log("err volume: ", err));
-  };
+
 
   return (
     <>
-      <button onClick={transfer}>Transfer</button>
-      <div className="container-fluid justify-content-around bg-warning">
-        <button onClick={play}>play</button>
-        <button onClick={playPrevious}>prev</button>
-        <button onClick={pause}>pause</button>
-        <button onClick={playNext}>next</button>
-        <button onClick={modVolume}>Volume</button>
+      <div className="container-fluid fixed-bottom bg-success m-0 p-0">
+        <div className="m-0 p-0 row row-cols-3 container-fluid">
+          <CurrentTrack item={item} />
+          <div className="m-0 p-0 col-5 container-fluid align-items-end bg-dark">
+            <div className="row m-0 p-0 h-100 py-auto justify-content-around align-items-center">
+              <SkipPrevious onClick={playPrevious} />
+              <PlayCircleOutline onClick={pausePlay} />
+              <SkipNext onClick={playNext} />
+            </div>
+          </div>
+          <div className="bg-dark col-3 container-fluid m-0 p-0">
+            <div className="row m-0 p-0 h-100 justify-content-around align-items-center">
+              <VolumeManage />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
 }
 
 export default PlayerButton;
+
+
