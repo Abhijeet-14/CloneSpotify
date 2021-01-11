@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
 import { spotify } from "../../Reducer/useSpotify";
+import FavoriteStatus from "./FavoriteStatus";
 
 function TrackList({ list, token, title = "<Playlist_Name>" }) {
   const [state, dispatch] = useDataLayerValue();
@@ -36,8 +37,8 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
   const play = async (spotify_uri) => {
     // const device_id = "1ccff34fa3935ea7c72aea368ba646d87587ef45";
     // .play({ device_id, uris: [spotify_uri] })
-    
-          // If device_id is not given, it plays song in current active device
+
+    // If device_id is not given, it plays song in current active device
     await spotify
       .play({ uris: [spotify_uri] })
       .then(() => console.log("Play!!"))
@@ -82,7 +83,8 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
                 const min = Math.floor(time / 60);
                 var sec = Math.floor(time % 60);
                 sec = sec < 10 ? "0" + sec : sec;
-                var isMuted = item?.track?.available_markets.length !== 0 ? "--" : "mute";
+                var isMuted =
+                  item?.track?.available_markets.length !== 0 ? "--" : "mute";
                 return (
                   <tr
                     key={index + 1}
@@ -138,7 +140,14 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
                         </a>
                       </div>
                     </td>
-                    <td className="align-middle">{min + ":" + sec}</td>
+                    <td className="m-0 p-0 align-middle ">
+                      <div className="row m-0 p-0 justify-content-around ">
+                        <FavoriteStatus />
+                        <div className="m-0 p-0">
+                          {min + ":" + sec}
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                 );
               })}
