@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { getCodeFromUrl, getTokenFromUrl } from "../Components/spotifyData";
-import { setUserAction, useSpotify } from "./useSpotify";
+import { setUserAction } from "./useSpotify";
 
 export const useCodeToToken = (dispatch) => {
   useEffect(() => {
@@ -10,7 +10,7 @@ export const useCodeToToken = (dispatch) => {
 
     const refr = async () => {
       await fetch(
-        `https://accounts.spotify.com/api/token?grant_type=authorization_code&code=${code}&redirect_uri=${"http://192.168.1.10:3000/"}`,
+        `https://accounts.spotify.com/api/token?grant_type=authorization_code&code=${code}&redirect_uri=${"http://localhost:3000/"}`,
         {
           headers: {
             Authorization:
@@ -22,6 +22,7 @@ export const useCodeToToken = (dispatch) => {
       )
         .then((res) => res.json())
         .then((data) => {
+          console.log("25: ", data);
           dispatch({
             type: "SET_NEWVAL",
             payload: { newVal: data },

@@ -1,16 +1,19 @@
 import React, { useState } from "react";
-//
-import { spotify, useSpotify } from "../../Reducer/useSpotify";
-import { useDataLayerValue } from "../../Reducer/DataLayer";
 
-// Component
+// COMPONENT
 import CurrentTrack from "./CurrentTrack";
 import VolumeManage from "./VolumeManage";
 
-// Icons
+// REDUCER or CONTEXT
+import { spotify } from "../../Reducer/useSpotify";
+import { useDataLayerValue } from "../../Reducer/DataLayer";
+
+// ICONS
 import PlayCircleOutline from "@material-ui/icons/PlayCircleOutline";
 import SkipPrevious from "@material-ui/icons/SkipPrevious";
 import SkipNext from "@material-ui/icons/SkipNext";
+
+
 
 function PlayerButton({ item }) {
   const [{ playingState }, dispatch] = useDataLayerValue();

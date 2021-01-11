@@ -1,7 +1,7 @@
 import React from "react";
 
 // Component
-import FavoriteSatuts from "./FavoriteStatus";
+import FavoriteStatus from "./FavoriteStatus";
 
 function CurrentTrack({ item }) {
   return (
@@ -46,7 +46,7 @@ function CurrentTrack({ item }) {
         </div>
         {/* Favorite Status */}
         <div className="col-2 m-0 p-0 bg-success">
-          <FavoriteSatuts />
+          <FavoriteStatus />
         </div>
       </div>
     </div>

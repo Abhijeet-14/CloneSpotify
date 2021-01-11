@@ -37,7 +37,7 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
     // const device_id = "1ccff34fa3935ea7c72aea368ba646d87587ef45";
     // .play({ device_id, uris: [spotify_uri] })
     
-    // If device_id is not given, it plays song in current active device
+          // If device_id is not given, it plays song in current active device
     await spotify
       .play({ uris: [spotify_uri] })
       .then(() => console.log("Play!!"))
@@ -96,7 +96,6 @@ function TrackList({ list, token, title = "<Playlist_Name>" }) {
                       scope="row"
                       className="p-0 m-0 align-middle text-center"
                     >
-                      {/* {val.play !== "" ? val.play : index + 1} */}
                       {val.play || index + 1}
                     </th>
                     <td className="row p-1 m-0 border-top-0  justify-content-center">

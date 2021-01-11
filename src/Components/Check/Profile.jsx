@@ -1,13 +1,13 @@
 import React from "react";
 import { useDataLayerValue } from "../../Reducer/DataLayer";
-import { useSpotify, useTrackCheck } from "../../Reducer/useSpotify";
+import { useTrackCheck } from "../../Reducer/useSpotify";
+import DeviceReady from "../DeviceReady";
 
 //Components
 import Account from "./Account";
 import LoadingAds from "./LoadingAds";
 import PlayerButton from "./PlayerButton";
 import TrackList from "./TrackList";
-import Transfer from "./Transfer";
 
 function Profile() {
   const [state, dispatch] = useDataLayerValue();
@@ -17,7 +17,7 @@ function Profile() {
 
   const item = playingTrack?.item;
 
-  //--- TRACK CHECK 
+  //--- TRACK CHECK
   useTrackCheck(item, dispatch);
 
   return (
@@ -25,11 +25,14 @@ function Profile() {
       className="container-fluid nin-vh-100 text-white"
       style={styles.profile}
     >
+      {token && <DeviceReady />}
+
+      {/* <Transfer /> */}
+
       <Account user={user} />
 
       {!ads && item ? (
         <>
-          <Transfer />
           <PlayerButton item={item} />
 
           <TrackList

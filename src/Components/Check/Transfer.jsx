@@ -1,18 +1,16 @@
 import React from "react";
-// import SpotifyPlayer from "react-spotify-web-playback";
 
 import { useDataLayerValue } from "../../Reducer/DataLayer";
 import { spotify } from "../../Reducer/useSpotify";
-// import { Button } from "@material-ui/core";
 
 function Transfer() {
   const [{ token }, dispatch] = useDataLayerValue();
 
-  // Transfer
-  const transfer = () => {
+  // Get User Available Devices:
+  const getUserDevices = () => {
     console.log("Transferring");
 
-    const device_id = "";
+    const device_id = ""; 
     spotify
       .getMyDevices()
       .then((res) => console.log(res))
@@ -32,47 +30,10 @@ function Transfer() {
   };
 
   return (
-    <div className="fixed-top">
-      <button onClick={transfer}>Transfer</button>
-      {/* <SpotifyPlayer
-        token={token}
-        uris={["spotify:artist:6HQYnRM4OzToCYPpVBInuU"]}
-      /> */}
+    <div className="fixed-to float-right bg-danger">
+      <button onClick={getUserDevices}>Transfer</button>
     </div>
   );
 }
 
 export default Transfer;
-
-// const transs = ({
-//   playerInstance: {
-//     _options: { getOAuthToken, id },
-//   },
-// }) => {
-//   console.log(id, getOAuthToken);
-//   getOAuthToken((token) => {
-//     fetch(`https://api.spotify.com/v1/me/player`, {
-//       method: "PUT",
-//       body: JSON.stringify({ device_ids: [id] }),
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${token}`,
-//       },
-//     })
-//       .then((res) => res.json())
-//       .then((data) => console.log("data: ", data))
-//       .catch((err) => console.log("err: ", err));
-//   });
-// };
-
-// transs({
-//   playerInstance: new window.Spotify.Player({
-//     name: "ABJ--",
-//     getOAuthToken: (cb) => cb(token),
-//   })
-// });
-
-// console.log(device_id);
-// spotify.transferMyPlayback( JSON.stringify( {deviceIDs: [device_id]} ) )
-//   .then(res => console.log("res: ", console.log(res)))
-//   .catch(err => console.log("err: ", console.log(err.response)));

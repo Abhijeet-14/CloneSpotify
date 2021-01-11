@@ -2,6 +2,7 @@ import React from 'react'
 import { loginUrl } from '../spotifyData';
 
 function Account({user}) {
+  
     return (
       <div>
         <h3 className="row justify-content-center">Welcome to profile!!</h3>

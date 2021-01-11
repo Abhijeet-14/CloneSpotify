@@ -78,7 +78,7 @@ export const useTrackCheck = (track = {}, dispatch) => {
           } else if (response?.item?.name !== track?.name) {
             setTime(1000);
 
-            // DISPATCHDE NEW TRACK
+            // DISPATCHED NEW TRACK
             console.log("DISPATCHED NEW TRACK");
             dispatch({
               type: "SET_CURRENT_PLAYING_TRACK",
@@ -107,11 +107,11 @@ export const useTrackCheck = (track = {}, dispatch) => {
   //        because we want to render it every seconds
 };
 
-//
-//
-//
-//
-//
+
+/*
+*
+* API CALLS:
+*
 /*
 === GET ACCESS TOKEN ===
     spotify.getAccessToken();
