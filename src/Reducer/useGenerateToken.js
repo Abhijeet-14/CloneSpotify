@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getCodeFromUrl, getTokenFromUrl } from "../Components/spotifyData";
+import { getCodeFromUrl, getTokenFromUrl, redirectUri } from "../Components/spotifyData";
 import { setUserAction } from "./useSpotify";
 
 export const useCodeToToken = (dispatch) => {
@@ -10,7 +10,7 @@ export const useCodeToToken = (dispatch) => {
 
     const refr = async () => {
       await fetch(
-        `https://accounts.spotify.com/api/token?grant_type=authorization_code&code=${code}&redirect_uri=${"http://localhost:3000/"}`,
+        `https://accounts.spotify.com/api/token?grant_type=authorization_code&code=${code}&redirect_uri=${redirectUri}`,
         {
           headers: {
             Authorization:
