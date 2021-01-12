@@ -3,9 +3,9 @@
 // to get access token & expires in 1 hour
 export const authEndpoint = "https://accounts.spotify.com/authorize";
 
-// export const redirectUri = "http://localhost:3000/";
+export const redirectUri = "http://localhost:3000/";
 // export const redirectUri = "https://192.168.1.10:3000/";
-export const redirectUri = "https://clone-spotify-rts.netlify.app/";
+// export const redirectUri = "https://spotiffy.netlify.app/";
 
 const clientId = "faf03f07c25447eaa635bb167bf7764e";
 // const clientSecret = "0821079c2c0c4cbfa75abd1bca051f7e"

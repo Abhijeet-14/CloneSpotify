@@ -7,7 +7,7 @@ function Login() {
   return (
     <div className="min-vh-100" style={styles.login}>
       <img src={logo} alt="Spotify Clone" style={styles.loginImg} />
-      <a href={loginUrl} className="border-0" style={styles.loginLink}>
+      <a href={loginUrl} className="border-0 text-decoration-none" style={styles.loginLink}>
         Login with Spotify
       </a>
     </div>

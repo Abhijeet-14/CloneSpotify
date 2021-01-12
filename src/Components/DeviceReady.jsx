@@ -28,12 +28,12 @@ function DeviceReady() {
   }, []);
 
   const handleLoadSuccess = () => {
-    console.log("Script loaded:\n", token);
-    initializePlayer(token);
+    console.log("Script loaded");
+    initializePlayer(token, dispatch);
   };
 
   const handleScriptLoad = () => {
-    console.log("Script Loading:\n", token);
+    console.log("Script Loading");
     // return new Promise((resolve) => {
     //   if (window.Spotify) {
     //     resolve();
@@ -44,11 +44,11 @@ function DeviceReady() {
   };
 
   const handleScriptCreate = () => {
-    console.log("Script created:\n", token);
+    console.log("Script created");
   };
 
   const handleScriptError = () => {
-    console.log("Script error:\n", token);
+    console.log("Script error");
   };
 
   return (
@@ -73,11 +73,11 @@ export default DeviceReady;
  *  Inititalize Player
  *
  */
-const initializePlayer = (token) => {
-  console.log("Initializzz: ", token);
+const initializePlayer = (token, dispatch) => {
+  console.log("Initializing Player: ");
   var volume = 0.5;
 
-  const name = "ABCD";
+  const name = "Spotify Clone, by Abhijeet";
 
   const player = new window.Spotify.Player({
     getOAuthToken: (cb) => cb(token),
@@ -88,35 +88,43 @@ const initializePlayer = (token) => {
   console.log("player: ", player);
 
   player.addListener("initialization_error", ({ message }) => {
-    console.error(message, token);
+    console.error(message);
   });
   player.addListener("authentication_error", ({ message }) => {
-    console.error(message, token);
+    console.error(message);
   });
   player.addListener("account_error", ({ message }) => {
-    console.error(message, token);
+    console.error(message);
   });
 
   player.addListener("playback_error", ({ message }) => {
-    console.error(message, token);
+    console.error(message);
   });
 
   player.addListener("player_state_changed", (state) => {
-    console.log("a: ", state);
+    console.log(state);
   });
 
-  player.addListener("ready", (state) => {
-    console.log("Ready with Device ID", state);
+  player.addListener("ready", ({device_id}) => {
+    console.log("Ready with Device ID", device_id);
+    dispatch({
+      type: "IS_ONLINE",
+      payload: { isOnline : true}
+    });
   });
 
-  player.addListener("not_ready", (state) => {
-    console.log("Device ID has gone offline", state);
+  player.addListener("not_ready", ({device_id}) => {
+    console.log("Device ID has gone offline", device_id );
+    dispatch({
+      type: "IS_ONLINE",
+      payload: { isOnline : false}
+    });
   });
 
   player
     .connect()
-    .then((success) => console.log("result::: ", success))
-    .catch((err) => console.log("err-result:: ", err));
+    .then((success) => console.log("Result: ", success))
+    .catch((err) => console.log("Err-Result:: ", err));
 };
 
 
@@ -126,16 +134,14 @@ const initializePlayer = (token) => {
  *
  */
 function transferMyPlayback(token) {
-  console.log("Pause is working!!", token);
-  const play = ({
+  console.log("Transfer-My-Playback is working!!");
+  const transfer = ({
     spotify_uri,
     playerInstance: {
       _options: { getOAuthToken, id },
     },
   }) => {
-    console.log("GetOAuth: ", id, getOAuthToken);
     getOAuthToken((access_token) => {
-      console.log("Inside OAuth: ", access_token);
       fetch(`https://api.spotify.com/v1/me/player`, {
         // /play?device_id=${id}`, {
         method: "PUT",
@@ -152,7 +158,7 @@ function transferMyPlayback(token) {
     });
   };
 
-  play({
+  transfer({
     playerInstance: new window.Spotify.Player({
       name: "ABJJJJJ--",
       getOAuthToken: (cb) => cb(token),

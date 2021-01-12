@@ -1,5 +1,9 @@
 import { useEffect } from "react";
-import { getCodeFromUrl, getTokenFromUrl, redirectUri } from "../Components/spotifyData";
+import {
+  getCodeFromUrl,
+  getTokenFromUrl,
+  redirectUri,
+} from "../Components/spotifyData";
 import { setUserAction } from "./useSpotify";
 
 export const useCodeToToken = (dispatch) => {
@@ -33,7 +37,7 @@ export const useCodeToToken = (dispatch) => {
         })
         .catch((err) => console.log("please: ", err));
 
-        // window.location.search = "?"
+      // window.location.search = "?"
     };
 
     refr();

@@ -9,7 +9,7 @@ function Account({user}) {
         <a
           href={loginUrl}
           style={styles.refresh}
-          className="row justify-content-center"
+          className="row justify-content-center text-decoration-none"
         >
           Refersh Token
         </a>

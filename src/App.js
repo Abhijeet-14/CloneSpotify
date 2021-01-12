@@ -6,9 +6,16 @@ import { useDataLayerValue } from "./Reducer/DataLayer";
 import { useCodeToToken, useUrlToToken } from "./Reducer/useGenerateToken";
 
 //----  Components
+// import MyComponents from "./Components/MyComponents";
 import Login from "./Components/Login";
 import Profile from "./Components/Check/Profile";
 import ReGenerate from "./Components/Check/ReGenerate";
+
+
+// TRY: MATERIAL UI - COMPONENTS
+import MaterialUI from "./_Comp_MaterialUI/MaterialUI";
+
+
 
 export const WindowDimContext = React.createContext(windowSize);
 
@@ -26,9 +33,17 @@ function App(props) {
       <WindowDimContext.Provider value={props}>
         {newVal?.refresh_token && <ReGenerate />}
         {token ? <Profile /> :  <Login />}
-      </WindowDimContext.Provider>
+        {/* <MyComponents /> */}
+      </WindowDimContext.Provider>  
     </div>
   );
 }
 
 export default windowSize(App);
+
+
+export const App1 = () => {
+  return (
+    <MaterialUI />
+  )
+}

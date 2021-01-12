@@ -1,23 +1,30 @@
 export const initialState = {
-    user: null,
-    expires: 0,
     ads: false,
-    recentlyPlayed: null,
-    yourLibrary: null,
-    item: null,
     albums: null,
-    playingTrack: null,
-    playingState: null,
-    play: false,
+    expires: 0,
+    isOnline: false,
+    item: null,
+    newVToken: null,
     next: false,
     pause: false,
-    newVToken: null,
+    play: false,
+    playingTrack: null,
+    playingState: null,
+    recentlyPlayed: null,
     token:  null,
+    yourLibrary: null,
+    user: null,
     // "BQDPHCQap3lzJjPnsDZiLU-tb9gAWjuQWaoFd5q1QNLOQfo5ibU2YbJdh56yoDDg1p72xU-m4VgFuSf_88EG2ADh99bTujspL9bsjKMqulnqr2xLrhPnYniyiCSBRroaTA4usBHHXeCM6dSyeG3yd0nNVKYJyqMNBb6AmsyLRhrJNt3g9HXy",
 }
 
 const reducer = (state, action) => {
     console.log(action)
+    if(action.type === 'IS_ONLINE'){
+        return {
+            ...state,
+            isOnline: action.payload.isOnline,
+        }
+    }
     if(action.type === 'SET_USER')
         return {
             ...state,
