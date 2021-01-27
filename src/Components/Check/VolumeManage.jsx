@@ -43,7 +43,7 @@ const VolumeManage = () => {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid container spacing={3} alignItems="center">
         <Grid item onClick={() => isMute()}>
           {state.mute && <VolumeOff />}
 
@@ -56,6 +56,8 @@ const VolumeManage = () => {
             value={state.vol}
             onChange={handleChange}
             aria-labelledby="continuous-slider"
+            className="mt-2"
+            style={{color: "green"}}
           />
         </Grid>
       </Grid>
@@ -69,7 +71,7 @@ const useStyles = makeStyles({
   root: {
     width: 200,
     margin: 0,
-    padding: "20px",
+    padding: "20px 20px 20px 0",
     alignItems: "center",
   },
 });

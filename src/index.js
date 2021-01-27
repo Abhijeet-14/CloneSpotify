@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+// import App from "./App";
 // import {App1} from "./App" 
+import {App2} from "./App" 
 import reportWebVitals from "./reportWebVitals";
 
 import { BrowserRouter } from "react-router-dom";
@@ -16,8 +17,9 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <DataLayer initialState={initialState} reducer={reducer}>
-        <App />
+        {/* <App /> */}
         {/* <App1 /> */}
+        <App2 />
       </DataLayer>
     </BrowserRouter>
   </React.StrictMode>,
